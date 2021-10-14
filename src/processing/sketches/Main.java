@@ -9,16 +9,10 @@ import java.util.Comparator;
 public class Main extends PApplet {
     public static PApplet sketch;
 
-    //Quaternion quaternion = new Quaternion(  0.854f, 0.146f, 0.354f, 0.354f);
-    //Quaternion quaternion = new Quaternion(  1f, 0f, 0f, 0f);
     Quaternion quaternion = new Quaternion().fromEuler(45,0,0);
 
     Quaternion rot = new Quaternion().fromEuler(1,1,0);
-    //Quaternion rot2 = new Quaternion( 1f,0.00f,0.009f, 0f);
 
-    //Quaternion quaternion = new Quaternion(    -0.283f, -0.338f,    0.640f, 0.629f);
-
-    //Quaternion quaternion = new Quaternion(    1f, 0f,   0f,0f);
 
 
     PVector[] points = new PVector[12];
@@ -51,6 +45,7 @@ public class Main extends PApplet {
 
     PVector center;
     PVector lastMousePos = new PVector();
+
     public void draw() {
         clear();
         PVector pos = new PVector(width/2f, height/2f/* + sin(MathUtil.degToRad(frameCount % 360))*100*/);
@@ -84,6 +79,7 @@ public class Main extends PApplet {
 
             strokeWeight(10);
 
+
             point(p.x, p.y);
 
             i++;
@@ -93,12 +89,11 @@ public class Main extends PApplet {
             Quaternion mouseRot = new Quaternion().fromEuler(lastMousePos.x - mouseX, mouseY - lastMousePos.y, 0);
             quaternion = mouseRot.multi(quaternion);
 
-            lastMousePos.x = mouseX;
-            lastMousePos.y = mouseY;
         }else {
             quaternion  = rot.multi(quaternion);
         }
-
+        lastMousePos.x = mouseX;
+        lastMousePos.y = mouseY;
 
         //quaternion  = rot2.multi(quaternion);
 

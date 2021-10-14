@@ -18,6 +18,8 @@ public class Quaternion {
         this.y = y;
         this.z = z;
         this.w = w;
+
+        this.normalize();
     }
 
     public Quaternion fromEuler(float yaw, float pitch, float roll){
@@ -28,10 +30,10 @@ public class Quaternion {
 
         float cy = cos(roll * 0.5f);
         float sy = sin(roll * 0.5f);
-        float cp = cos(yaw * 0.5f);
-        float sp = sin(yaw * 0.5f);
-        float cr = cos(pitch * 0.5f);
-        float sr = sin(pitch * 0.5f);
+        float cp = cos(pitch * 0.5f);
+        float sp = sin(pitch * 0.5f);
+        float cr = cos(yaw * 0.5f);
+        float sr = sin(yaw * 0.5f);
 
         x = cr * cp * cy + sr * sp * sy;
         y = sr * cp * cy - cr * sp * sy;
