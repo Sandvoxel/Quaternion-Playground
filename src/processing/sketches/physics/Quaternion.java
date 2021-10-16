@@ -1,8 +1,8 @@
-package processing.sketches;
+package processing.sketches.physics;
 
-import processing.core.PVector;
+import processing.sketches.Main;
+import processing.sketches.MathUtil;
 
-import static java.lang.Math.*;
 import static processing.core.PApplet.cos;
 import static processing.core.PApplet.sin;
 
@@ -24,9 +24,9 @@ public class Quaternion {
 
     public Quaternion fromEuler(float yaw, float pitch, float roll){
 
-        yaw = MathUtil.degToRad(yaw);
-        pitch = MathUtil.degToRad(pitch);
-        roll = MathUtil.degToRad(roll);
+        yaw = -MathUtil.degToRad(yaw);
+        pitch = -MathUtil.degToRad(pitch);
+        roll = -MathUtil.degToRad(roll);
 
         float cy = cos(roll * 0.5f);
         float sy = sin(roll * 0.5f);
