@@ -1,9 +1,8 @@
 package processing.sketches;
 
-import org.checkerframework.checker.units.qual.C;
 import processing.core.PApplet;
 import processing.core.PVector;
-import processing.sketches.physics.Quaternion;
+import processing.sketches.physics.math.Quaternion;
 
 public class Main extends PApplet {
     public static PApplet sketch;
@@ -23,7 +22,7 @@ public class Main extends PApplet {
     public void setup() {
         background(0);
 
-        axisLines.setup();
+        //axisLines.setup();
         cube.setup();
     }
 
@@ -32,12 +31,16 @@ public class Main extends PApplet {
     public void draw() {
         clear();
 
-        axisLines.draw();
+        cube.update();
+
+        //axisLines.draw();
         cube.draw();
+
+        cube.applyForce(new PVector(0,1,0), new PVector());
+
 
         if(mousePressed) {
             Quaternion mouseRot = new Quaternion().fromEuler(lastMousePos.x - mouseX, mouseY - lastMousePos.y, 0);
-            //axisLines.rotate(mouseRot);
             cube.rotate(mouseRot);
         }
 

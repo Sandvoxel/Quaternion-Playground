@@ -1,10 +1,9 @@
-package processing.sketches.physics;
+package processing.sketches.physics.math;
 
 import processing.sketches.Main;
 import processing.sketches.MathUtil;
 
-import static processing.core.PApplet.cos;
-import static processing.core.PApplet.sin;
+import static processing.core.PApplet.*;
 
 public class Quaternion {
     private float x, y, z, w;
@@ -66,6 +65,7 @@ public class Quaternion {
         return out;
 
     }
+
 
     public Quaternion multi(Quaternion q){
         Quaternion out = new Quaternion();

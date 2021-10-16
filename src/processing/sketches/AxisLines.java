@@ -1,7 +1,9 @@
 package processing.sketches;
 
 import processing.core.PVector;
-import processing.sketches.physics.RigidBody;
+import processing.sketches.physics.math.Mesh;
+import processing.sketches.physics.math.Vertex;
+import processing.sketches.physics.rigidbodys.RigidBody;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -17,7 +19,7 @@ public class AxisLines extends RigidBody {
 
         Arrays.stream(points).forEach(point -> point.mult(60));
 
-        this.vertices = points;
+        this.mesh.setVertices(points);
     }
 
 
@@ -27,8 +29,8 @@ public class AxisLines extends RigidBody {
         float[][] mat = rotation.toMatrix();
 
         int i = 0;
-        for (PVector point: vertices) {
-            PVector p = MathUtil.MultiMat(point, mat);
+        for (Vertex point: mesh.getVertices()) {
+            PVector p = point.getTransformedBodyPos(mat);
 
 
             p.add(pos);
