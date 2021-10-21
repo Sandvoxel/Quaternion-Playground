@@ -5,8 +5,12 @@ import processing.core.PVector;
 
 public class Cube {
     private Quaternion rotation = new Quaternion();
+
+    private float mass = 1f;
+
     private PVector pos;
-    private PVector velocity = new PVector(0,1,0);
+    private PVector momentum = new PVector();
+    private PVector thrust = new PVector(0,0.01f,0);
 
     PVector[] points = new PVector[9];
 
@@ -35,7 +39,9 @@ public class Cube {
     public void update(){
         float[][] mat = rotation.toMatrix();
 
-        pos.add(MathUtil.MultiMat(velocity, mat));
+        momentum.add(MathUtil.MultiMat(thrust,mat));
+
+        pos.add(momentum.div(mass));
         if(applet.mousePressed){
             Quaternion mouseRot = new Quaternion().fromEuler(lastMousePos.x - applet.mouseX, applet.mouseY - lastMousePos.y, 0);
             rotation = mouseRot.multi(rotation);
