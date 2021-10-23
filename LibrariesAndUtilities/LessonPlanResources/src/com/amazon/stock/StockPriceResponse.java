@@ -11,16 +11,16 @@ public class StockPriceResponse {
         this.price = price;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public String getSymbol() {
         return symbol;
     }
 
     public BigDecimal getPrice() {
         return price;
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     public static class Builder {

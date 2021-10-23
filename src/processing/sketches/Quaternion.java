@@ -1,14 +1,12 @@
 package processing.sketches;
 
-import processing.core.PApplet;
 import processing.core.PVector;
 
-import java.util.Vector;
-
-import static java.lang.Math.*;
+import static java.lang.Math.PI;
 import static processing.core.PApplet.cos;
 import static processing.core.PApplet.sin;
 
+//TODO: fix mapping of scalar to w so it fits convention as of now the scalar is mapped to x
 public class Quaternion {
     private float x, y, z, w;
 
@@ -24,23 +22,9 @@ public class Quaternion {
 
         this.normalize();
     }
-    public Quaternion(PVector vector) {
-        this.x = 1;
-        this.y = vector.x;
-        this.z = vector.y;
-        this.w = vector.z;
-    }
-
-    public PVector getAxisOfRotation(){
-        return new PVector(y,z,w).normalize();
-    }
-
-    public Quaternion Scale(float scale){
-        return new Quaternion(x,scale * y,scale * z,scale * w);
-    }
 
     @Deprecated
-    public Quaternion fromEuler(float yaw, float pitch, float roll){
+    public Quaternion fromEuler(float yaw, float pitch, float roll) {
 
         yaw = -MathUtil.degToRad(yaw);
         pitch = -MathUtil.degToRad(pitch);
@@ -62,7 +46,7 @@ public class Quaternion {
     }
 
 
-    public float[][] toMatrix(){
+    public float[][] toMatrix() {
         float[][] out = new float[3][3];
 
         float y2 = y * y;
@@ -70,36 +54,42 @@ public class Quaternion {
         float w2 = w * w;
 
         out[0][0] = 1 - 2 * (z2 + w2);
-        out[0][1] = 2 * (y*z + x*w);
-        out[0][2] = 2 * (y*w - x*z);
+        out[0][1] = 2 * (y * z + x * w);
+        out[0][2] = 2 * (y * w - x * z);
 
-        out[1][0] = 2 * (y*z - x*w);
+        out[1][0] = 2 * (y * z - x * w);
         out[1][1] = 1 - 2 * (y2 + w2);
-        out[1][2] = 2 * (z*w + x*y);
+        out[1][2] = 2 * (z * w + x * y);
 
-        out[2][0] = 2 * (y*w + x*z);
-        out[2][1] = 2 * (z*w - x*y);
+        out[2][0] = 2 * (y * w + x * z);
+        out[2][1] = 2 * (z * w - x * y);
         out[2][2] = 1 - 2 * (y2 + z2);
 
         return out;
 
     }
 
-    public Quaternion multi(Quaternion q){
+    public Quaternion multi(Quaternion q) {
         Quaternion out = new Quaternion();
 
-        out.x = x*q.x - y*q.y - z*q.z - w*q.w;
-        out.y = x*q.y + y*q.x + z*q.w - w*q.z;
-        out.z = x*q.z - y*q.w + z*q.x + w*q.y;
-        out.w = x*q.w + y*q.z - z*q.y + w*q.x;
+        out.x = x * q.x - y * q.y - z * q.z - w * q.w;
+        out.y = x * q.y + y * q.x + z * q.w - w * q.z;
+        out.z = x * q.z - y * q.w + z * q.x + w * q.y;
+        out.w = x * q.w + y * q.z - z * q.y + w * q.x;
 
         out.normalize();
         return out;
     }
 
-    public Quaternion applyRotation(PVector vector){
+    /**
+     * Gets the change in q from angular velocity
+     * TODO: Find better name for this method
+     * @param vector angular velocity
+     * @return a quat of the change of the rotation.
+     */
+    public Quaternion applyRotation(PVector vector) {
         Quaternion out = new Quaternion();
-        float rotation = (vector.mag() % (float) (PI * 2d))/2;
+        float rotation = (vector.mag() % (float) (PI * 2d)) / 2;
         PVector vec = vector.copy().normalize();
 
         vec.mult(sin(rotation));
@@ -112,20 +102,20 @@ public class Quaternion {
         return out.normalize();
     }
 
-    public PVector getAxis(){
-        return new PVector(y,z,w);
+    public PVector getAxis() {
+        return new PVector(y, z, w);
     }
 
-    public Quaternion getInverce(){
+    public Quaternion getInverse() {
         return new Quaternion(x, -y, -z, -w);
     }
 
 
-    public float magnitude(){
-        return Main.sqrt(x*x + y*y + z*z + w*w);
+    public float magnitude() {
+        return Main.sqrt(x * x + y * y + z * z + w * w);
     }
 
-    public Quaternion normalize(){
+    public Quaternion normalize() {
         float magnitude = magnitude();
         x /= magnitude;
         y /= magnitude;
@@ -133,23 +123,6 @@ public class Quaternion {
         w /= magnitude;
 
         return this;
-    }
-
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public float getZ() {
-        return z;
-    }
-
-    public float getW() {
-        return w;
     }
 
     @Override

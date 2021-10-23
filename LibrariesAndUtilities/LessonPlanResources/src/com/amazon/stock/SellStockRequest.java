@@ -9,16 +9,16 @@ public class SellStockRequest {
         this.quantity = quantity;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public String getSymbol() {
         return symbol;
     }
 
     public int getQuantity() {
         return quantity;
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     public static class Builder {

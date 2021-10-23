@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AmazonProductServiceTest {
 
@@ -17,12 +15,12 @@ public class AmazonProductServiceTest {
     private AmazonProductService serviceUnderTest;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         serviceUnderTest = new AmazonProductService(new File(TEST_FILE_PATH));
     }
 
     @Test
-    public void getProductByAsin_asinRecognized_productReturned(){
+    public void getProductByAsin_asinRecognized_productReturned() {
         // GIVEN
         // recognized asin
         String recognizedAsin = "B00006IEJB";
@@ -34,14 +32,14 @@ public class AmazonProductServiceTest {
         // THEN
         // product returned should be non null
         assertNotNull(product, "Expected a recognized asin to return non null product when getProductByAsin" +
-            "is called.");
+                "is called.");
         // product returned should match the requested asin
         assertEquals(recognizedAsin, product.getAsin(), "Expected product returned by getProductByAsin to " +
-            "have an asin matching the asin requested for.");
+                "have an asin matching the asin requested for.");
     }
 
     @Test
-    public void getProductByAsin_asinUnrecognized_nullReturned(){
+    public void getProductByAsin_asinUnrecognized_nullReturned() {
         // GIVEN
         // unrecognized asin
         String unrecognizedAsin = "B123456789";
@@ -56,7 +54,7 @@ public class AmazonProductServiceTest {
     }
 
     @Test
-    public void getProductByAsin_asinNull_exceptionRaised(){
+    public void getProductByAsin_asinNull_exceptionRaised() {
         // GIVEN
         // null asin
         String nullAsin = null;
@@ -69,7 +67,7 @@ public class AmazonProductServiceTest {
     }
 
     @Test
-    public void getProductByAsin_asinEmpty_exceptionRaised(){
+    public void getProductByAsin_asinEmpty_exceptionRaised() {
         // GIVEN
         // empty asin
         String emptyAsin = "";
@@ -82,7 +80,7 @@ public class AmazonProductServiceTest {
     }
 
     @Test
-    public void getProductByAsin_asinWhitespace_exceptionRaised(){
+    public void getProductByAsin_asinWhitespace_exceptionRaised() {
         // GIVEN
         // whitespace asin
         String whitespaceAsin = "  ";

@@ -13,10 +13,12 @@ public class BankClient {
     /**
      * Private constructor for BankClient so other code can't instantiate us
      */
-    public BankClient() { }
+    public BankClient() {
+    }
 
     /**
      * Withdraw funds from an account
+     *
      * @param amount The amount to withdraw
      * @return the updated balance
      */

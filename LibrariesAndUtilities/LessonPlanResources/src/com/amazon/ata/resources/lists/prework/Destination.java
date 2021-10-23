@@ -10,7 +10,8 @@ public class Destination {
 
     /**
      * Constructs new destination
-     * @param location Defines location to visit e.g. Paris or London.
+     *
+     * @param location       Defines location to visit e.g. Paris or London.
      * @param daysAtLocation Defines how many days to spend at the selected location.
      */
     public Destination(String location, int daysAtLocation) {
@@ -20,6 +21,7 @@ public class Destination {
 
     /**
      * Get location which is going to be visited
+     *
      * @return location name
      */
     public String getLocation() {
@@ -28,6 +30,7 @@ public class Destination {
 
     /**
      * Get number of days to spend at the location
+     *
      * @return number of days to spend at location
      */
     public int getDaysAtLocation() {

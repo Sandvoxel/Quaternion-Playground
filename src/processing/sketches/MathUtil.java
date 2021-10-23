@@ -4,7 +4,7 @@ import processing.core.PVector;
 
 public class MathUtil {
 
-    public static PVector MultiMat(PVector vec, float[][] mat){
+    public static PVector MultiMat(PVector vec, float[][] mat) {
         PVector out = new PVector();
 
         out.x = mat[0][0] * vec.x + mat[0][1] * vec.y + mat[0][2] * vec.z;
@@ -14,7 +14,7 @@ public class MathUtil {
         return out;
     }
 
-    public static float degToRad(float deg){
+    public static float degToRad(float deg) {
         return deg * (Main.PI / 180);
     }
 }
