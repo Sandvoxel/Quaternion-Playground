@@ -3,14 +3,17 @@ package processing.sketches;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 public class Cube {
-    private Quaternion rotation = new Quaternion();
+    private Quaternion rotation = new Quaternion(1f,0,0,0f);
+    //private Quaternion angularMomentum = new Quaternion(0.99f,0f,1f,0f);
 
-    private float mass = 1f;
+    private final float mass = 1f;
 
-    private PVector pos;
-    private PVector momentum = new PVector();
-    private PVector thrust = new PVector(0,0.01f,0);
+    private final PVector pos;
+    private final PVector momentum = new PVector();
 
     PVector[] points = new PVector[9];
 
@@ -33,21 +36,28 @@ public class Cube {
         points[8] = new PVector(0,4,0);
     }
 
-    PVector lastMousePos = new PVector();
 
+    private final PVector angularMomentum = new PVector(0,  0, MathUtil.degToRad(0.1f));
 
     public void update(){
         float[][] mat = rotation.toMatrix();
 
-        momentum.add(MathUtil.MultiMat(thrust,mat));
+
+        //System.out.println(rotation.applyRotation(angularMomentum));
+
+        rotation = rotation.multi(rotation.applyRotation(angularMomentum));
+
 
         pos.add(momentum.div(mass));
+
+/*        momentum.add(MathUtil.MultiMat(thrust,mat));
+
         if(applet.mousePressed){
             Quaternion mouseRot = new Quaternion().fromEuler(lastMousePos.x - applet.mouseX, applet.mouseY - lastMousePos.y, 0);
             rotation = mouseRot.multi(rotation);
         }
         lastMousePos.x = applet.mouseX;
-        lastMousePos.y = applet.mouseY;
+        lastMousePos.y = applet.mouseY;*/
     }
 
 
@@ -58,6 +68,8 @@ public class Cube {
         int i = 0;
         for (PVector point: points) {
             PVector p = MathUtil.MultiMat(point, mat);
+
+            p.y *= -1;
 
             float color = p.z;
             p.mult(60);
@@ -76,6 +88,16 @@ public class Cube {
 
             i++;
         }
+        PVector axis = angularMomentum.copy();
+        axis.mult(60);
+        axis.add(pos);
+
+        applet.stroke(Color.red.getRGB());
+        applet.strokeWeight(1);
+        applet.line(pos.x, pos.y, axis.x,axis.y);
+
+        applet.strokeWeight(10);
+        applet.point(axis.x, axis.y);
 
 
     }

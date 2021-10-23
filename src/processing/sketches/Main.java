@@ -32,9 +32,9 @@ public class Main extends PApplet {
     public void draw() {
         clear();
 
-        cube.update();
 
         cube.draw();
+        cube.update();
 
     }
 
