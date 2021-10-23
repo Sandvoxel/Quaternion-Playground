@@ -39,6 +39,7 @@ public class Quaternion {
         return new Quaternion(x,scale * y,scale * z,scale * w);
     }
 
+    @Deprecated
     public Quaternion fromEuler(float yaw, float pitch, float roll){
 
         yaw = -MathUtil.degToRad(yaw);
@@ -98,23 +99,17 @@ public class Quaternion {
 
     public Quaternion applyRotation(PVector vector){
         Quaternion out = new Quaternion();
-        if(vector.mag() == 0) return out;
+        float rotation = (vector.mag() % (float) (PI * 2d))/2;
+        PVector vec = vector.copy().normalize();
 
-        PVector vec = vector.copy();
+        vec.mult(sin(rotation));
 
-        out.x = y*vec.x - z*vec.y - w*vec.z;
-        out.y = x*vec.x + z*vec.x - w*vec.y;
-        out.z = x*vec.y - y*vec.x + w*vec.x;
-        out.w = x*vec.z + y*vec.y - z*vec.x;
+        out.x = cos(rotation);
+        out.y = vec.x;
+        out.z = vec.y;
+        out.w = vec.z;
 
-
-/*        out.x = 0 - y*vec.x - z*vec.y - w*vec.z;
-        out.y = x*vec.x + 0 + z*vec.x - w*vec.y;
-        out.z = x*vec.y - y*vec.x + 0 + w*vec.x;
-        out.w = x*vec.z + y*vec.y - z*vec.x + 0;*/
-
-
-        return out;
+        return out.normalize();
     }
 
     public PVector getAxis(){

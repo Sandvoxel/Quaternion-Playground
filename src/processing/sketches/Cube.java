@@ -37,13 +37,13 @@ public class Cube {
     }
 
 
-    private final PVector angularMomentum = new PVector(1,  0, 0);
+    private final PVector angularMomentum = new PVector(0,  0, MathUtil.degToRad(0.1f));
 
     public void update(){
         float[][] mat = rotation.toMatrix();
 
 
-        System.out.println(rotation.applyRotation(angularMomentum));
+        //System.out.println(rotation.applyRotation(angularMomentum));
 
         rotation = rotation.multi(rotation.applyRotation(angularMomentum));
 
@@ -88,8 +88,7 @@ public class Cube {
 
             i++;
         }
-/*        PVector axis = angularMomentum.getAxisOfRotation();
-        System.out.println(axis);
+        PVector axis = angularMomentum.copy();
         axis.mult(60);
         axis.add(pos);
 
@@ -98,7 +97,7 @@ public class Cube {
         applet.line(pos.x, pos.y, axis.x,axis.y);
 
         applet.strokeWeight(10);
-        applet.point(axis.x, axis.y);*/
+        applet.point(axis.x, axis.y);
 
 
     }
