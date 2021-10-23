@@ -6,7 +6,7 @@ import static java.lang.Math.PI;
 import static processing.core.PApplet.cos;
 import static processing.core.PApplet.sin;
 
-//TODO: fix mapping of scalar to w so it fits convention as of now the scalar is mapped to x
+//FIXME: fix mapping of scalar to w so it fits convention as of now the scalar is mapped to x
 public class Quaternion {
     private float x, y, z, w;
 
@@ -83,7 +83,7 @@ public class Quaternion {
 
     /**
      * Gets the change in q from angular velocity
-     * TODO: Find better name for this method
+     * FIXME: Find better name for this method
      * @param vector angular velocity
      * @return a quat of the change of the rotation.
      */

@@ -12,7 +12,7 @@ public class Cube {
 
     private final PVector pos;
     private final PVector momentum = new PVector();
-    private final PVector angularMomentum = new PVector(0, 0, MathUtil.degToRad(0.1f));
+    private final PVector angularMomentum = new PVector(MathUtil.degToRad(1), MathUtil.degToRad(0), MathUtil.degToRad(0));
 
     PVector[] points = new PVector[9];
 
@@ -45,7 +45,7 @@ public class Cube {
 
     }
 
-
+    //WARNING: Y values inverted to fit the lib cord system.
     public void draw() {
 
         float[][] mat = rotation.toMatrix();
@@ -74,7 +74,8 @@ public class Cube {
             i++;
         }
         PVector axis = angularMomentum.copy();
-        axis.mult(60);
+        axis.x *= -1;
+        axis.mult(10000);
         axis.add(pos);
 
         applet.stroke(Color.red.getRGB());
