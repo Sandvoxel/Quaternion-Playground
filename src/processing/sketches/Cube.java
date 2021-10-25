@@ -38,7 +38,7 @@ public class Cube {
 
     public void update() {
 
-        rotation = rotation.multi(rotation.applyRotation(angularMomentum));
+        rotation = rotation.applyRotation(angularMomentum);
 
 
         pos.add(momentum.div(mass));
@@ -74,7 +74,6 @@ public class Cube {
             i++;
         }
         PVector axis = angularMomentum.copy();
-        axis.x *= -1;
         axis.mult(10000);
         axis.add(pos);
 

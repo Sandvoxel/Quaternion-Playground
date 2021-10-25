@@ -83,7 +83,8 @@ public class Quaternion {
 
     /**
      * Gets the change in q from angular velocity
-     * FIXME: Find better name for this method
+     * FIXME: Find better name for this method.
+     * FIXME: X has to be inverted for some reason.
      * @param vector angular velocity
      * @return a quat of the change of the rotation.
      */
@@ -95,11 +96,11 @@ public class Quaternion {
         vec.mult(sin(rotation));
 
         out.x = cos(rotation);
-        out.y = vec.x;
+        out.y = -vec.x;
         out.z = vec.y;
         out.w = vec.z;
 
-        return out.normalize();
+        return multi(out.normalize());
     }
 
     public PVector getAxis() {
