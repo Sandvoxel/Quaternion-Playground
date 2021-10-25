@@ -6,19 +6,18 @@ import static java.lang.Math.PI;
 import static processing.core.PApplet.cos;
 import static processing.core.PApplet.sin;
 
-//FIXME: fix mapping of scalar to w so it fits convention as of now the scalar is mapped to x
 public class Quaternion {
-    private float x, y, z, w;
+    private float w, x, y, z;
 
     public Quaternion() {
-        x = 1;
+        w = 1;
     }
 
     public Quaternion(float x, float y, float z, float w) {
+        this.w = w;
         this.x = x;
         this.y = y;
         this.z = z;
-        this.w = w;
 
         this.normalize();
     }
@@ -37,10 +36,10 @@ public class Quaternion {
         float cr = cos(yaw * 0.5f);
         float sr = sin(yaw * 0.5f);
 
-        x = cr * cp * cy + sr * sp * sy;
-        y = sr * cp * cy - cr * sp * sy;
-        z = cr * sp * cy + sr * cp * sy;
-        w = cr * cp * sy - sr * sp * cy;
+        w = cr * cp * cy + sr * sp * sy;
+        x = sr * cp * cy - cr * sp * sy;
+        y = cr * sp * cy + sr * cp * sy;
+        z = cr * cp * sy - sr * sp * cy;
 
         return this.normalize();
     }
@@ -49,20 +48,20 @@ public class Quaternion {
     public float[][] toMatrix() {
         float[][] out = new float[3][3];
 
-        float y2 = y * y;
-        float z2 = z * z;
-        float w2 = w * w;
+        float y2 = x * x;
+        float z2 = y * y;
+        float w2 = z * z;
 
         out[0][0] = 1 - 2 * (z2 + w2);
-        out[0][1] = 2 * (y * z + x * w);
-        out[0][2] = 2 * (y * w - x * z);
+        out[0][1] = 2 * (x * y + w * z);
+        out[0][2] = 2 * (x * z - w * y);
 
-        out[1][0] = 2 * (y * z - x * w);
+        out[1][0] = 2 * (x * y - w * z);
         out[1][1] = 1 - 2 * (y2 + w2);
-        out[1][2] = 2 * (z * w + x * y);
+        out[1][2] = 2 * (y * z + w * x);
 
-        out[2][0] = 2 * (y * w + x * z);
-        out[2][1] = 2 * (z * w - x * y);
+        out[2][0] = 2 * (x * z + w * y);
+        out[2][1] = 2 * (y * z - w * x);
         out[2][2] = 1 - 2 * (y2 + z2);
 
         return out;
@@ -72,10 +71,10 @@ public class Quaternion {
     public Quaternion multi(Quaternion q) {
         Quaternion out = new Quaternion();
 
-        out.x = x * q.x - y * q.y - z * q.z - w * q.w;
-        out.y = x * q.y + y * q.x + z * q.w - w * q.z;
-        out.z = x * q.z - y * q.w + z * q.x + w * q.y;
-        out.w = x * q.w + y * q.z - z * q.y + w * q.x;
+        out.w = w * q.w - x * q.x - y * q.y - z * q.z;
+        out.x = w * q.x + x * q.w + y * q.z - z * q.y;
+        out.y = w * q.y - x * q.z + y * q.w + z * q.x;
+        out.z = w * q.z + x * q.y - y * q.x + z * q.w;
 
         out.normalize();
         return out;
@@ -95,33 +94,33 @@ public class Quaternion {
 
         vec.mult(sin(rotation));
 
-        out.x = cos(rotation);
-        out.y = -vec.x;
-        out.z = vec.y;
-        out.w = vec.z;
+        out.w = cos(rotation);
+        out.x = vec.x;
+        out.y = vec.y;
+        out.z = vec.z;
 
         return multi(out.normalize());
     }
 
     public PVector getAxis() {
-        return new PVector(y, z, w);
+        return new PVector(x, y, z).normalize();
     }
 
     public Quaternion getInverse() {
-        return new Quaternion(x, -y, -z, -w);
+        return new Quaternion(w, -x, -y, -z);
     }
 
 
     public float magnitude() {
-        return Main.sqrt(x * x + y * y + z * z + w * w);
+        return Main.sqrt(w * w + x * x + y * y + z * z);
     }
 
     public Quaternion normalize() {
         float magnitude = magnitude();
+        w /= magnitude;
         x /= magnitude;
         y /= magnitude;
         z /= magnitude;
-        w /= magnitude;
 
         return this;
     }
@@ -129,10 +128,10 @@ public class Quaternion {
     @Override
     public String toString() {
         return "Quaternion{" +
-                "x=" + x +
-                ", y=" + y +
-                ", z=" + z +
-                ", w=" + w +
+                "x=" + w +
+                ", y=" + x +
+                ", z=" + y +
+                ", w=" + z +
                 '}';
     }
 }

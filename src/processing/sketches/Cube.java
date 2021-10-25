@@ -8,11 +8,11 @@ import java.awt.*;
 public class Cube {
     private final float mass = 1f;
 
-
-
     private final PVector pos;
     private final PVector momentum = new PVector();
     private final PVector angularMomentum = new PVector(MathUtil.degToRad(1), MathUtil.degToRad(0), MathUtil.degToRad(0));
+
+    private final PVector testForce = new PVector(1,0,0);
 
     PVector[] points = new PVector[9];
 
@@ -40,6 +40,7 @@ public class Cube {
 
         rotation = rotation.applyRotation(angularMomentum);
 
+        System.out.println(applyForce(points[0], testForce));
 
         pos.add(momentum.div(mass));
 
@@ -85,6 +86,10 @@ public class Cube {
         applet.point(axis.x, axis.y);
 
 
+    }
+
+    public PVector applyForce(PVector point, PVector force){
+        return point.cross(force);
     }
 
 
