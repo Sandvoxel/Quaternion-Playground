@@ -83,7 +83,6 @@ public class Quaternion {
     /**
      * Gets the change in q from angular velocity
      * FIXME: Find better name for this method.
-     * FIXME: X has to be inverted for some reason.
      * @param vector angular velocity
      * @return a quat of the change of the rotation.
      */

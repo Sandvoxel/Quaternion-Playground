@@ -10,7 +10,7 @@ public class Cube {
 
     private final PVector pos;
     private final PVector momentum = new PVector();
-    private final PVector angularMomentum = new PVector(MathUtil.degToRad(1), MathUtil.degToRad(0), MathUtil.degToRad(0));
+    private final PVector angularMomentum = new PVector(MathUtil.degToRad(1), MathUtil.degToRad(1), MathUtil.degToRad(0));
 
     private final PVector testForce = new PVector(1,0,0);
 
@@ -40,13 +40,12 @@ public class Cube {
 
         rotation = rotation.applyRotation(angularMomentum);
 
-        System.out.println(applyForce(points[0], testForce));
+        //System.out.println(applyForce(points[0], testForce));
 
         pos.add(momentum.div(mass));
 
     }
 
-    //WARNING: Y values inverted to fit the lib cord system.
     public void draw() {
 
         float[][] mat = rotation.toMatrix();
@@ -54,8 +53,6 @@ public class Cube {
         int i = 0;
         for (PVector point : points) {
             PVector p = MathUtil.MultiMat(point, mat);
-
-            p.y *= -1;
 
             float color = p.z;
             p.mult(60);
