@@ -10,14 +10,14 @@ public class Cube {
 
     private final PVector pos;
     private final PVector momentum = new PVector();
-    private final PVector angularMomentum = new PVector(MathUtil.degToRad(1), MathUtil.degToRad(1), MathUtil.degToRad(0));
+    private final PVector angularVelocity = new PVector(MathUtil.degToRad(0), MathUtil.degToRad(0), MathUtil.degToRad(0));
 
-    private final PVector testForce = new PVector(1,0,0);
+    private final PVector testForce = new PVector(2,0,0);
 
     PVector[] points = new PVector[9];
 
     PApplet applet = Main.sketch;
-    private Quaternion rotation = new Quaternion(1f, 0, 0, 0f);
+    private Quaternion rotation = new Quaternion(0.001f, 0, 0, 0f);
 
 
     public Cube(PVector pos) {
@@ -38,12 +38,22 @@ public class Cube {
 
     public void update() {
 
-        rotation = rotation.applyRotation(angularMomentum);
+        rotation = rotation.applyRotation(angularVelocity);
 
-        //System.out.println(applyForce(points[0], testForce));
+        if(applet.keyPressed){
+            System.out.println(applyForce(points[8], testForce));
+        }
 
         pos.add(momentum.div(mass));
 
+
+    }
+
+    public PVector applyForce(PVector point, PVector force){
+        float mag = force.mag();
+        force.normalize();
+
+        return point.cross(force).mult(mag);
     }
 
     public void draw() {
@@ -71,7 +81,7 @@ public class Cube {
 
             i++;
         }
-        PVector axis = angularMomentum.copy();
+        PVector axis = angularVelocity.copy();
         axis.mult(10000);
         axis.add(pos);
 
@@ -85,9 +95,7 @@ public class Cube {
 
     }
 
-    public PVector applyForce(PVector point, PVector force){
-        return point.cross(force);
-    }
+
 
 
 }
