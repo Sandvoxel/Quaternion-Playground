@@ -13,6 +13,10 @@ public class BuyStockResponse {
         this.quantity = quantity;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public String getSymbol() {
         return symbol;
     }
@@ -23,10 +27,6 @@ public class BuyStockResponse {
 
     public int getQuantity() {
         return quantity;
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     public static class Builder {

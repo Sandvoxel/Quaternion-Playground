@@ -10,7 +10,8 @@ public class DevicePart {
 
     /**
      * Construct a DevicePart given its ASIN and the GPM who manages it.
-     * @param asin The ASIN of the DevicePart.
+     *
+     * @param asin             The ASIN of the DevicePart.
      * @param responsibleGpmId The ID of the GPM responsible for this DevicePart.
      */
     public DevicePart(final String asin, final String responsibleGpmId) {

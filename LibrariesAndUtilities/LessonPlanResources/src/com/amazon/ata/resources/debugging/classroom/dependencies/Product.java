@@ -13,13 +13,14 @@ public class Product {
     private String title;
     private String asin;
     private String vendor;
-    @JsonProperty(value="isSNS")
+    @JsonProperty(value = "isSNS")
     private boolean isSNS;
     private BigDecimal listPrice;
 
-    public Product(){}
+    public Product() {
+    }
 
-    public Product(String title, String asin, String vendor, boolean isSns, BigDecimal listPrice){
+    public Product(String title, String asin, String vendor, boolean isSns, BigDecimal listPrice) {
         this.title = title;
         this.asin = asin;
         this.vendor = vendor;
