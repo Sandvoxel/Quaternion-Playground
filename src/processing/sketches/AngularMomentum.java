@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class AngularMomentum {
     private final float[][] bodyTensor = new float[3][3];
-    private PVector angularMomentum = new PVector(100,0,0);
+    private final PVector angularMomentum = new PVector(100,0,0);
     private float pointMass;
 
     public AngularMomentum(PVector[] points, float mass) {

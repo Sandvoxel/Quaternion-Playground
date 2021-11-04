@@ -91,7 +91,7 @@ public class Cube {
             i++;
         }
         PVector axis = angularVelocity.copy();
-        axis.mult(10000);
+        axis.mult(200);
         axis.add(pos);
 
         applet.stroke(Color.red.getRGB());
