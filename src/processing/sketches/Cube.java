@@ -4,13 +4,16 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Cube {
     private final float mass = 1f;
 
     private final PVector pos;
     private final PVector momentum = new PVector();
-    private final PVector angularVelocity = new PVector(MathUtil.degToRad(0), MathUtil.degToRad(0), MathUtil.degToRad(0));
+
+    private final PVector angularVelocity = new PVector(MathUtil.degToRad(1), MathUtil.degToRad(0), MathUtil.degToRad(0));
+    private final AngularMomentum angularMomentum;
 
     private final PVector testForce = new PVector(2,0,0);
 
@@ -34,11 +37,16 @@ public class Cube {
         points[7] = new PVector(1, -1, -1);
 
         points[8] = new PVector(0, 4, 0);
+
+
+        angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0,7), 1);
     }
 
     public void update() {
 
         rotation = rotation.applyRotation(angularVelocity);
+
+        angularMomentum.calculateTensor(rotation);
 
         if(applet.keyPressed){
             System.out.println(applyForce(points[8], testForce));
