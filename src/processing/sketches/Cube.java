@@ -20,7 +20,7 @@ public class Cube {
     PVector[] points = new PVector[9];
 
     PApplet applet = Main.sketch;
-    private Quaternion rotation = new Quaternion().fromEuler(0,0,45);
+    private Quaternion rotation = new Quaternion().fromEuler(0,0,1);
 
 
     public Cube(PVector pos) {
@@ -36,7 +36,7 @@ public class Cube {
         points[6] = new PVector(-1, -1, -1);
         points[7] = new PVector(1, -1, -1);
 
-        points[8] = new PVector(0, 4, 0);
+        points[8] = new PVector(0, 10, 0);
 
 
         angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0,9), mass);
