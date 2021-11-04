@@ -6,11 +6,14 @@ import java.util.Arrays;
 
 public class AngularMomentum {
     private final float[][] bodyTensor = new float[3][3];
-    private PVector angularMomentum = new PVector();
+    private PVector angularMomentum = new PVector(0.001f,0,0);
     private float pointMass;
 
     public AngularMomentum(PVector[] points, float mass) {
         this.pointMass = mass / points.length;
+
+        System.out.println(pointMass * points.length);
+        System.out.println(pointMass);
 
         Arrays.stream(points).forEach(point -> {
 
@@ -43,11 +46,14 @@ public class AngularMomentum {
     }
 
 
+    public PVector getAngularVelocity(Quaternion rotation){
+        return MathUtil.MultiMat(angularMomentum,calculateTensor(rotation));
+    }
 
     public Quaternion applyForce(PVector force, Quaternion rotation){
         float[][] tensor = calculateTensor(rotation);
         Quaternion out = rotation.copy();
-        
+
 
         return out;
     }

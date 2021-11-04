@@ -7,12 +7,12 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class Cube {
-    private final float mass = 1f;
+    private final float mass = 50f;
 
     private final PVector pos;
     private final PVector momentum = new PVector();
 
-    private final PVector angularVelocity = new PVector(MathUtil.degToRad(1), MathUtil.degToRad(0), MathUtil.degToRad(0));
+    private PVector angularVelocity = new PVector(MathUtil.degToRad(0), MathUtil.degToRad(0), MathUtil.degToRad(0));
     private final AngularMomentum angularMomentum;
 
     private final PVector testForce = new PVector(2,0,0);
@@ -20,7 +20,7 @@ public class Cube {
     PVector[] points = new PVector[9];
 
     PApplet applet = Main.sketch;
-    private Quaternion rotation = new Quaternion(0.001f, 0, 0, 0f);
+    private Quaternion rotation = new Quaternion().fromEuler(0,0,45);
 
 
     public Cube(PVector pos) {
@@ -39,10 +39,12 @@ public class Cube {
         points[8] = new PVector(0, 4, 0);
 
 
-        angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0,7), 1);
+        angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0,9), mass);
     }
 
     public void update() {
+
+        angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
         rotation = rotation.applyRotation(angularVelocity);
 
