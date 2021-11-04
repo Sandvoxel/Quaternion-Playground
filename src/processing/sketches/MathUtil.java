@@ -21,8 +21,10 @@ public class MathUtil {
         float[][] result = new float[3][3];
 
         for (int i = 0; i < firstMatrix.length; i++) {
-            for (int j = 0; j < firstMatrix[0].length; j++) {
-                result[i][j] = firstMatrix[i][j] * secondMatrix[i][j];
+            for (int j = 0; j < secondMatrix[0].length; j++) {
+                for (int k = 0; k < firstMatrix[0].length; k++) {
+                    result[i][j] += firstMatrix[i][k] * secondMatrix[k][j];
+                }
             }
         }
         return result;

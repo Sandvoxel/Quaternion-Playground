@@ -46,7 +46,6 @@ public class Cube {
 
         rotation = rotation.applyRotation(angularVelocity);
 
-        angularMomentum.calculateTensor(rotation);
 
         if(applet.keyPressed){
             System.out.println(applyForce(points[8], testForce));

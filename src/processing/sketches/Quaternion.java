@@ -133,4 +133,8 @@ public class Quaternion {
                 ", w=" + z +
                 '}';
     }
+
+    public Quaternion copy() {
+        return new Quaternion(x,y,z,w);
+    }
 }

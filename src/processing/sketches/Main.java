@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Main extends PApplet {
     public static PApplet sketch;
-    Quaternion test = new Quaternion().fromEuler(1, 1, 1);
+    Quaternion test = new Quaternion().fromEuler(90, 100, 90);
 
     Cube cube;
 
@@ -27,12 +27,12 @@ public class Main extends PApplet {
         background(0);
         cube = new Cube(new PVector(width / 2f, height / 2f));
 
-        print(MathUtil.invert(test.toMatrix()));
+/*        print(MathUtil.invert(test.toMatrix()));
         System.out.println();
         print(test.toMatrix());
         System.out.println();
         print(MathUtil.multiplyMatrices(test.toMatrix(), MathUtil.invert(test.toMatrix())));
-
+*/
 
     }
 
