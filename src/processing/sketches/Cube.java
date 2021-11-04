@@ -10,6 +10,7 @@ public class Cube {
     private final float mass = 50f;
 
     private final PVector pos;
+    private final PVector centerOfMass = new PVector();
     private final PVector momentum = new PVector();
 
     private PVector angularVelocity = new PVector(MathUtil.degToRad(0), MathUtil.degToRad(0), MathUtil.degToRad(0));
@@ -36,10 +37,14 @@ public class Cube {
         points[6] = new PVector(-1, -1, -1);
         points[7] = new PVector(1, -1, -1);
 
-        points[8] = new PVector(0, 10, 0);
+        points[8] = new PVector(0, -5, 0);
 
 
         angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0,9), mass);
+
+        Arrays.stream(points).forEach(centerOfMass::add);
+
+        centerOfMass.div(points.length);
     }
 
     public void update() {
@@ -54,7 +59,6 @@ public class Cube {
         }
 
         pos.add(momentum.div(mass));
-
 
     }
 
@@ -72,17 +76,19 @@ public class Cube {
         int i = 0;
         for (PVector point : points) {
             PVector p = MathUtil.MultiMat(point, mat);
+            PVector com = MathUtil.MultiMat(centerOfMass,mat);
+            p.sub(com);
 
             float color = p.z;
             p.mult(60);
+            com.mult(60);
             p.add(pos);
 
             applet.stroke((color + 1) * 255 / 2, (color + 1) * 255 / 2, 255);
             applet.strokeWeight(1);
 
             if (i == 8) {
-
-                applet.line(pos.x, pos.y, p.x, p.y);
+                applet.line(pos.x - com.x, pos.y - com.y, p.x, p.y);
             }
 
             applet.strokeWeight(10);
