@@ -15,7 +15,7 @@ public class Cube {
     private final PVector centerOfMass = new PVector();
     private final PVector momentum = new PVector();
 
-    private Quaternion rotation = new Quaternion().fromEuler(0.001f,0.001f,0.001f);
+    private Quaternion rotation = new Quaternion();
     private PVector angularVelocity;
     private final AngularMomentum angularMomentum;
 
@@ -55,17 +55,21 @@ public class Cube {
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
         if(applet.keyPressed && applet.keyCode == 38){
-            PVector vector = points[0].copy().cross(new PVector(0,0,1));
-            System.out.println(vector);
+            PVector vector = points[0].copy().cross(new PVector(1,0,0));
+
+            vector = MathUtil.MultiMat(vector,rotation.toMatrix());
             angularMomentum.applyForce(vector);
 
         }
         if(applet.keyPressed && applet.keyCode == 40){
-            PVector vector = points[0].copy().cross(new PVector(0,0,-1));
-            System.out.println(vector);
+            PVector vector = points[0].copy().cross(new PVector(-1,0,0));
+            vector = MathUtil.MultiMat(vector,rotation.toMatrix());
             angularMomentum.applyForce(vector);
-
         }
+        if(applet.keyPressed && applet.keyCode == 39){
+            angularMomentum.zero();
+        }
+
 
         rotation = rotation.applyRotation(angularVelocity);
 
