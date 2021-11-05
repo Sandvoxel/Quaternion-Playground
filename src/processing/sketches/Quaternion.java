@@ -5,6 +5,7 @@ import processing.core.PVector;
 import static java.lang.Math.PI;
 import static processing.core.PApplet.cos;
 import static processing.core.PApplet.sin;
+import static processing.core.PConstants.TAU;
 
 public class Quaternion {
     private float w, x, y, z;
@@ -88,7 +89,7 @@ public class Quaternion {
      */
     public Quaternion applyRotation(PVector vector) {
         Quaternion out = new Quaternion();
-        float rotation = (vector.mag() % (float) (PI * 2d)) / 2;
+        float rotation = (vector.mag() % (TAU)) / 2;
         PVector vec = vector.copy().normalize();
 
         vec.mult(sin(rotation));

@@ -6,14 +6,11 @@ import java.util.Arrays;
 
 public class AngularMomentum {
     private final float[][] bodyTensor = new float[3][3];
-    private final PVector angularMomentum = new PVector(10,0,0);
-    private float pointMass;
+    private final PVector angularMomentum = new PVector(30,0,0);
+    private final float pointMass;
 
     public AngularMomentum(PVector[] points, float mass) {
         this.pointMass = mass / points.length;
-
-        System.out.println(pointMass * points.length);
-        System.out.println(pointMass);
 
         Arrays.stream(points).forEach(point -> {
 

@@ -13,7 +13,8 @@ public class Cube {
     private final PVector centerOfMass = new PVector();
     private final PVector momentum = new PVector();
 
-    private PVector angularVelocity = new PVector(MathUtil.degToRad(0), MathUtil.degToRad(0), MathUtil.degToRad(0));
+    private Quaternion rotation = new Quaternion().fromEuler(0.001f,0.001f,0.001f);
+    private PVector angularVelocity;
     private final AngularMomentum angularMomentum;
 
     private final PVector testForce = new PVector(2,0,0);
@@ -21,30 +22,30 @@ public class Cube {
     PVector[] points = new PVector[9];
 
     PApplet applet = Main.sketch;
-    private Quaternion rotation = new Quaternion().fromEuler(0,0,1);
 
 
     public Cube(PVector pos) {
         this.pos = pos;
 
-        points[0] = new PVector(1, 1, 1);
-        points[1] = new PVector(-1, 1, 1);
-        points[2] = new PVector(-1, -1, 1);
-        points[3] = new PVector(1, -1, 1);
+        points[0] = new PVector(2, 3, 0.5f);
+        points[1] = new PVector(-2, 3, 0.5f);
+        points[2] = new PVector(-2, -3, 0.5f);
+        points[3] = new PVector(2, -3, 0.5f);
 
-        points[4] = new PVector(1, 1, -1);
-        points[5] = new PVector(-1, 1, -1);
-        points[6] = new PVector(-1, -1, -1);
-        points[7] = new PVector(1, -1, -1);
+        points[4] = new PVector(2, 3, -0.5f);
+        points[5] = new PVector(-2, 3, -0.5f);
+        points[6] = new PVector(-2, -3, -0.5f);
+        points[7] = new PVector(2, -3, -0.5f);
 
         points[8] = new PVector(0, -5, 0);
 
 
-        angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0,9), mass);
+        angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0, 8), mass);
+        angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
-        Arrays.stream(points).forEach(centerOfMass::add);
+/*        Arrays.stream(points).forEach(centerOfMass::add);
 
-        centerOfMass.div(points.length);
+        centerOfMass.div(points.length);*/
     }
 
     public void update() {
