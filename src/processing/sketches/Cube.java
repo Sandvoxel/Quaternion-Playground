@@ -1,5 +1,7 @@
 package processing.sketches;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -43,21 +45,30 @@ public class Cube {
         angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0, 8), mass);
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
-/*        Arrays.stream(points).forEach(centerOfMass::add);
-
-        centerOfMass.div(points.length);*/
+//        Arrays.stream(points).forEach(centerOfMass::add);
+//
+//        centerOfMass.div(points.length);
     }
 
     public void update() {
 
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
+        if(applet.keyPressed && applet.keyCode == 38){
+            PVector vector = points[0].copy().cross(new PVector(0,0,1));
+            System.out.println(vector);
+            angularMomentum.applyForce(vector);
+
+        }
+        if(applet.keyPressed && applet.keyCode == 40){
+            PVector vector = points[0].copy().cross(new PVector(0,0,-1));
+            System.out.println(vector);
+            angularMomentum.applyForce(vector);
+
+        }
+
         rotation = rotation.applyRotation(angularVelocity);
 
-
-        if(applet.keyPressed){
-            System.out.println(applyForce(points[8], testForce));
-        }
 
         pos.add(momentum.div(mass));
 
@@ -93,6 +104,8 @@ public class Cube {
             }
 
             applet.strokeWeight(10);
+            if(i == 0)
+                applet.stroke(Color.MAGENTA.getRGB());
             applet.point(p.x, p.y);
 
             i++;
