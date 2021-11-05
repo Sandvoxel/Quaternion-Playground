@@ -23,7 +23,13 @@ public class Quaternion {
         this.normalize();
     }
 
-    @Deprecated
+    /**
+     * Converts Eular angles to a Quaternion for testing
+     * @param yaw X
+     * @param pitch Y
+     * @param roll Z
+     * @return Quaternion of given angles
+     */
     public Quaternion fromEuler(float yaw, float pitch, float roll) {
 
         yaw = -MathUtil.degToRad(yaw);
@@ -45,7 +51,10 @@ public class Quaternion {
         return this.normalize();
     }
 
-
+    /**
+     * converts Quaternion to rotation matrix
+     * @return 3x3 rotation matrix
+     */
     public float[][] toMatrix() {
         float[][] out = new float[3][3];
 
@@ -69,6 +78,11 @@ public class Quaternion {
 
     }
 
+    /**
+     * multiples Quaternion
+     * @param q Quaternion to multiply against.
+     * @return Quaternion after multiply.
+     */
     public Quaternion multi(Quaternion q) {
         Quaternion out = new Quaternion();
 
@@ -83,7 +97,6 @@ public class Quaternion {
 
     /**
      * Gets the change in q from angular velocity
-     * FIXME: Find better name for this method.
      * @param vector angular velocity
      * @return a quat of the change of the rotation.
      */
@@ -102,19 +115,18 @@ public class Quaternion {
         return multi(out.normalize());
     }
 
-    public PVector getAxis() {
-        return new PVector(x, y, z).normalize();
-    }
-
-    public Quaternion getInverse() {
-        return new Quaternion(w, -x, -y, -z);
-    }
-
-
+    /**
+     * gets the magnitude of the Quaternion
+     * @return float of the length of the Quaternion.
+     */
     public float magnitude() {
         return Main.sqrt(w * w + x * x + y * y + z * z);
     }
 
+    /**
+     * normalizes Quaternion and returns the normalized Quaternion
+     * @return normalized Quaternion
+     */
     public Quaternion normalize() {
         float magnitude = magnitude();
         w /= magnitude;

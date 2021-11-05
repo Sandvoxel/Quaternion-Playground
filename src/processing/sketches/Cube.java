@@ -74,13 +74,6 @@ public class Cube {
 
     }
 
-    public PVector applyForce(PVector point, PVector force){
-        float mag = force.mag();
-        force.normalize();
-
-        return point.cross(force).mult(mag);
-    }
-
     public void draw() {
 
         float[][] mat = rotation.toMatrix();

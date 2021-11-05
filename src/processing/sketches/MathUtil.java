@@ -7,6 +7,12 @@ import java.util.stream.IntStream;
 
 public class MathUtil {
 
+    /**
+     * Multiply Vector3 by a 3x3 rotation matrix
+     * @param vec Vector3 point to rotate.
+     * @param mat Rotation matrix.
+     * @return Transformed points.
+     */
     public static PVector MultiMat(PVector vec, float[][] mat) {
         PVector out = new PVector();
 
@@ -17,6 +23,12 @@ public class MathUtil {
         return out;
     }
 
+    /**
+     * Multiply 2 matrices
+     * @param firstMatrix first matrix
+     * @param secondMatrix second matrix
+     * @return Multiplied matrix
+     */
     public static float[][] multiplyMatrices(float[][] firstMatrix, float[][] secondMatrix) {
         float[][] result = new float[3][3];
 
@@ -34,7 +46,11 @@ public class MathUtil {
         return deg * (Main.PI / 180);
     }
 
-
+    /**
+     * inverts matrix
+     * @param a matrix to invert
+     * @return inverts matrix
+     */
     public static float[][] invert(float a[][])
     {
         int n = a.length;

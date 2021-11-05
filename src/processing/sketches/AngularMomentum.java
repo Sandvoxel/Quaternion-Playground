@@ -33,6 +33,11 @@ public class AngularMomentum {
         });
     }
 
+    /**
+     * Converts from the body tensor to the Normal tensor
+     * @param rotation current rotation of body
+     * @return new transformed tensor for given rotation
+     */
     public float[][] calculateTensor(Quaternion rotation){
         float[][] newTensor = Arrays.stream(bodyTensor).map(float[]::clone).toArray(float[][]::new);
 
@@ -42,7 +47,11 @@ public class AngularMomentum {
         return newTensor;
     }
 
-
+    /**
+     * gets the current angular velocity
+     * @param rotation the current rotation
+     * @return The Current angular velocity.
+     */
     public PVector getAngularVelocity(Quaternion rotation){
         return MathUtil.MultiMat(angularMomentum, MathUtil.invert(calculateTensor(rotation)));
     }
