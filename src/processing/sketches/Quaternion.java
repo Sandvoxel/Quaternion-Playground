@@ -137,6 +137,10 @@ public class Quaternion {
         return this;
     }
 
+    public Quaternion getInverse(){
+        return new Quaternion(-x,-y,-z,w);
+    }
+
     @Override
     public String toString() {
         return "Quaternion{" +
