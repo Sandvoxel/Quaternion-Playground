@@ -53,8 +53,7 @@ public class Cube {
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
         if(applet.keyPressed && applet.keyCode == 38){
-            PVector testForce = MathUtil.MultiMat(new PVector(-1,0,0), rotation.getInverse().toMatrix());
-            PVector vector = new PVector(2, 3, 0).copy().cross(testForce);
+            PVector vector = new PVector(2, 3, 0).copy().cross(new PVector(-1,0,0));
 
             vector = MathUtil.MultiMat(vector,rotation.toMatrix());
             angularMomentum.applyForce(vector);
