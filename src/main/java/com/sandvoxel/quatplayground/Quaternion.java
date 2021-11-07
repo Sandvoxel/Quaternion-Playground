@@ -1,8 +1,7 @@
-package processing.sketches;
+package com.sandvoxel.quatplayground;
 
 import processing.core.PVector;
 
-import static java.lang.Math.PI;
 import static processing.core.PApplet.cos;
 import static processing.core.PApplet.sin;
 import static processing.core.PConstants.TAU;

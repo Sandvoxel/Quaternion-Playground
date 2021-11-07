@@ -1,7 +1,5 @@
-package processing.sketches;
+package com.sandvoxel.quatplayground;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import processing.core.PApplet;
 import processing.core.PVector;
 

@@ -1,4 +1,4 @@
-package processing.sketches;
+package com.sandvoxel.quatplayground;
 
 import processing.core.PVector;
 

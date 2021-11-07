@@ -1,9 +1,7 @@
-package processing.sketches;
+package com.sandvoxel.quatplayground;
 
 import processing.core.PApplet;
 import processing.core.PVector;
-
-import java.util.Arrays;
 
 public class Main extends PApplet {
     public static PApplet sketch;
@@ -15,7 +13,7 @@ public class Main extends PApplet {
     PVector[] points = new PVector[4];
 
     public static void main(String... args) {
-        PApplet.main("processing.sketches.Main");
+        PApplet.main("com.sandvoxel.quatplayground.Main");
     }
 
     public void settings() {

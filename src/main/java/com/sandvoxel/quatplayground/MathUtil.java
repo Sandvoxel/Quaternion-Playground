@@ -1,9 +1,6 @@
-package processing.sketches;
+package com.sandvoxel.quatplayground;
 
 import processing.core.PVector;
-
-import java.util.Arrays;
-import java.util.stream.IntStream;
 
 public class MathUtil {
 
