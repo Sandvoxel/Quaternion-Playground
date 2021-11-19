@@ -25,17 +25,17 @@ public class Cube {
     public Cube(PVector pos) {
         this.pos = pos;
 
-        points[0] = new PVector(2, 3, 0.5f);
-        points[1] = new PVector(-2, 3, 0.5f);
-        points[2] = new PVector(-2, -3, 0.5f);
-        points[3] = new PVector(2, -3, 0.5f);
+        points[0] = new PVector(120, 180, 30);
+        points[1] = new PVector(-120, 180, 30);
+        points[2] = new PVector(-120, -180, 30);
+        points[3] = new PVector(120, -180, 30);
 
-        points[4] = new PVector(2, 3, -0.5f);
-        points[5] = new PVector(-2, 3, -0.5f);
-        points[6] = new PVector(-2, -3, -0.5f);
-        points[7] = new PVector(2, -3, -0.5f);
+        points[4] = new PVector(120, 180, -30);
+        points[5] = new PVector(-120, 180, -30);
+        points[6] = new PVector(-120, -180, -30);
+        points[7] = new PVector(120, -180, -30);
 
-        points[8] = new PVector(0, -5, 0);
+        points[8] = new PVector(0, -300, 0);
 
 
         angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0, 8), mass);
@@ -51,9 +51,14 @@ public class Cube {
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
         if(applet.keyPressed && applet.keyCode == 38){
-            PVector vector = new PVector(2, 3, 0).copy().cross(new PVector(-1,0,0));
+            PVector point = new PVector(120, 180, 0);
+            PVector force = new PVector(-5,0,0);
 
-            vector = MathUtil.MultiMat(vector,rotation.toMatrix());
+            force = MathUtil.MultiMat(force, MathUtil.invert(rotation.toMatrix()));
+
+            PVector vector = point.copy().cross(force);
+
+            //vector = MathUtil.MultiMat(vector,rotation.toMatrix());
             angularMomentum.applyForce(vector);
 
         }
@@ -85,8 +90,6 @@ public class Cube {
             p.sub(com);
 
             float color = p.z;
-            p.mult(60);
-            com.mult(60);
             p.add(pos);
 
             applet.stroke((color + 1) * 255 / 2, (color + 1) * 255 / 2, 255);
