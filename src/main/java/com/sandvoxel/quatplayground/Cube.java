@@ -68,6 +68,10 @@ public class Cube {
             PVector vector = point.copy().cross(force);
             angularMomentum.applyForce(vector);
 
+            float scale = -Math.abs(force.copy().normalize().dot(point.copy().normalize()));
+
+            System.out.println(scale);
+
             momentum.add(force.mult(-1));
         }
         if(Main.keyz[1]){
@@ -80,6 +84,11 @@ public class Cube {
         }
         if(Main.keyz[3]){
             coolForce -= 0.05f;
+        }
+        if(Main.keyz[4]){
+            PVector spin = new PVector(180, 0, 0).cross(new PVector(0,0,5));
+            angularMomentum.applyForce(MathUtil.MultiMat(spin, rotation.toMatrix()));
+
         }
 
 

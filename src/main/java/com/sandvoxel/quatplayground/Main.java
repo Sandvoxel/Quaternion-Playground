@@ -6,7 +6,7 @@ import processing.event.KeyEvent;
 
 public class Main extends PApplet {
     public static PApplet sketch;
-    public static boolean keyz[] = new boolean [4];
+    public static boolean keyz[] = new boolean [5];
     Quaternion test = new Quaternion().fromEuler(90, 100, 90);
 
     Cube cube;
@@ -43,7 +43,10 @@ public class Main extends PApplet {
         if (key == 'w')  keyz[0] = true;
         if (key == 's')  keyz[1] = true;
         if (key == 'a')  keyz[2] = true;
-        if (key == 'd')  keyz[3] = true;    }
+        if (key == 'd')  keyz[3] = true;
+        if (key == ' ')  keyz[4] = true;
+
+    }
 
     @Override
     public void keyReleased(KeyEvent event) {
@@ -51,6 +54,8 @@ public class Main extends PApplet {
         if (key == 's')  keyz[1] = false;
         if (key == 'a')  keyz[2] = false;
         if (key == 'd')  keyz[3] = false;
+        if (key == ' ')  keyz[4] = false;
+
     }
 
 
