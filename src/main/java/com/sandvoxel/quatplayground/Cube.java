@@ -68,10 +68,6 @@ public class Cube {
             PVector vector = point.copy().cross(force);
             angularMomentum.applyForce(vector);
 
-            float scale = -Math.abs(force.copy().normalize().dot(point.copy().normalize()));
-
-            System.out.println(scale);
-
             momentum.add(force.mult(-1));
         }
         if(Main.keyz[1]){
