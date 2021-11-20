@@ -46,37 +46,59 @@ public class Cube {
 //        centerOfMass.div(points.length);
     }
 
+    float coolForce = 0;
+
     public void update() {
 
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
         if(applet.keyPressed && applet.keyCode == 38){
-            PVector point = new PVector(120, 180, 0);
-            PVector force = new PVector(-5,0,0);
+            PVector point = new PVector(0, 180, 0);
+            PVector force = new PVector((float) (Math.cos(coolForce))* 10,Math.abs((float) (Math.sin(coolForce))) * 10,0);
+            coolForce += 0.05f;
 
-            force = MathUtil.MultiMat(force, MathUtil.invert(rotation.toMatrix()));
+            point = MathUtil.MultiMat(point, rotation.toMatrix());
+            force = MathUtil.MultiMat(force, rotation.toMatrix());
+
+            PVector temp = force.copy().mult(20).add(pos).add(point);
+            PVector temp2 = point.copy().add(pos);
+            applet.line(temp2.x,temp2.y,temp.x,temp.y);
+
 
             PVector vector = point.copy().cross(force);
-
-            //vector = MathUtil.MultiMat(vector,rotation.toMatrix());
             angularMomentum.applyForce(vector);
 
+/*            float scale = -Math.abs();
+
+            System.out.println(scale);*/
+
+            momentum.add(force.mult(-1));
         }
         if(applet.keyPressed && applet.keyCode == 40){
-            PVector vector = points[0].copy().cross(new PVector(-1,0,0));
+            PVector vector = new PVector(120, 0, 0).copy().cross(new PVector(0,0,10));
             vector = MathUtil.MultiMat(vector,rotation.toMatrix());
             angularMomentum.applyForce(vector);
         }
         if(applet.keyPressed && applet.keyCode == 39){
             angularMomentum.zero();
+            momentum.mult(0);
+        }
+        if(applet.keyPressed && applet.keyCode == 37){
+            angularMomentum.zero();
+            pos.set(new PVector( applet.width / 2f,  applet.height / 2f));
+            momentum.mult(0);
         }
 
 
         rotation = rotation.applyRotation(angularVelocity);
 
 
-        pos.add(momentum.div(mass));
+        pos.add(momentum.copy().div(mass));
 
+
+        if(pos.x > applet.width){
+            pos.x = 0;
+        }
     }
 
     public void draw() {
