@@ -41,19 +41,19 @@ public class Cube {
         angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0, 8), mass);
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
-//        Arrays.stream(points).forEach(centerOfMass::add);
-//
-//        centerOfMass.div(points.length);
+        Arrays.stream(Arrays.copyOfRange(points,0, 8)).forEach(centerOfMass::add);
+
+        centerOfMass.div(points.length);
     }
 
-    float coolForce = (float) (Math.PI / 2);
+    float coolAngle = (float) (Math.PI / 2);
 
     public void update() {
 
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
         PVector point = new PVector(0, 180, 0);
-        PVector force = new PVector((float) (Math.cos(coolForce))* 5,Math.abs((float) (Math.sin(coolForce))) * 5,0);
+        PVector force = new PVector((float) (Math.cos(coolAngle))* 5,Math.abs((float) (Math.sin(coolAngle))) * 5,0);
 
         point = MathUtil.MultiMat(point, rotation.toMatrix());
         force = MathUtil.MultiMat(force, rotation.toMatrix());
@@ -76,10 +76,10 @@ public class Cube {
             momentum.mult(0);
         }
         if(Main.keyz[2]){
-            coolForce += 0.05f;
+            coolAngle += 0.05f;
         }
         if(Main.keyz[3]){
-            coolForce -= 0.05f;
+            coolAngle -= 0.05f;
         }
         if(Main.keyz[4]){
             PVector spin = new PVector(180, 0, 0).cross(new PVector(0,0,5));
