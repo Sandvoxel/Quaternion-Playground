@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cube {
     private final float mass = 50f;
@@ -123,17 +124,19 @@ public class Cube {
         float[][] mat = rotation.toMatrix();
         PVector com = MathUtil.MultiMat(centerOfMass, mat);
 
-        points.sort(Comparator.comparingDouble(x -> x.z));
+        List<PVector> transformedPoints = points.stream()
+                .map(PVector::copy)
+                .map(x -> MathUtil.MultiMat(x, mat))
+                .sorted(Comparator.comparingDouble(x -> x.z))
+                .collect(Collectors.toList());
 
-        for (PVector point : points) {
-            PVector p = MathUtil.MultiMat(point, mat);
+        for (PVector p : transformedPoints) {
 
             p.sub(com);
 
-            float color = p.z;
-            p.add(pos);
+            applet.stroke( p.z * 255 / 2,  p.z * 255 / 2, 255);
 
-            applet.stroke((color + 1) * 255 / 2, (color + 1) * 255 / 2, 255);
+            p.add(pos);
 
             applet.strokeWeight(10);
 
@@ -141,6 +144,7 @@ public class Cube {
         }
 
         PVector l = MathUtil.MultiMat(topLine.copy().sub(centerOfMass), mat);
+        applet.stroke(l.z * 255 / 2, l.z * 255 / 2, 255);
         l.add(pos);
         applet.point(l.x,l.y);
         applet.strokeWeight(1);
