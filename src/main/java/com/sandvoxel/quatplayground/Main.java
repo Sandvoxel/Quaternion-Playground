@@ -20,7 +20,7 @@ public class Main extends PApplet {
 
     public void settings() {
         sketch = this;
-        size(3000, 2000);
+        size(1920, 1080);
     }
 
     public void setup() {

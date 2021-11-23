@@ -4,7 +4,9 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Cube {
     private final float mass = 50f;
@@ -17,33 +19,48 @@ public class Cube {
     private PVector angularVelocity;
     private final AngularMomentum angularMomentum;
 
-    PVector[] points = new PVector[9];
-
     PApplet applet = Main.sketch;
+
+    List<PVector> points = new ArrayList<>();
+    PVector topLine;
 
 
     public Cube(PVector pos) {
         this.pos = pos;
+        int numberOfRings = 5;
+        int numberOfPoints = 20;
+        float radius = 100;
+        float height = 360;
 
-        points[0] = new PVector(120, 180, 30);
-        points[1] = new PVector(-120, 180, 30);
-        points[2] = new PVector(-120, -180, 30);
-        points[3] = new PVector(120, -180, 30);
+        float heightIncrement = height / numberOfRings;
+        heightIncrement += heightIncrement / (numberOfRings - 1);
 
-        points[4] = new PVector(120, 180, -30);
-        points[5] = new PVector(-120, 180, -30);
-        points[6] = new PVector(-120, -180, -30);
-        points[7] = new PVector(120, -180, -30);
+        for (int i = 0; i < numberOfRings; i++) {
+            for (int j = 0; j < numberOfPoints; j++) {
+                float increment = (float) ((Math.PI * 2) / numberOfPoints);
+                points.add(new PVector((float)Math.cos(increment * j) * radius, (i * heightIncrement) - (height / 2), (float)Math.sin(increment * j) * radius));
+            }
+        }
 
-        points[8] = new PVector(0, -300, 0);
+       /* points.add(new PVector(120, 180, 30));
+        points.add(new PVector(-120, 180, 30));
+        points.add(new PVector(-120, -180, 30));
+        points.add(new PVector(120, -180, 30));
+
+        points.add(new PVector(120, 180, -30));
+        points.add(new PVector(-120, 180, -30));
+        points.add(new PVector(-120, -180, -30));
+        points.add(new PVector(120, -180, -30));*/
+
+        topLine =  new PVector(0, -300, 0);
 
 
-        angularMomentum = new AngularMomentum(Arrays.copyOfRange(points,0, 8), mass);
+        angularMomentum = new AngularMomentum(points.toArray(new PVector[0]), mass);
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
-        Arrays.stream(Arrays.copyOfRange(points,0, 8)).forEach(centerOfMass::add);
+        points.forEach(centerOfMass::add);
 
-        centerOfMass.div(points.length);
+        centerOfMass.div(points.size());
     }
 
     float coolAngle = (float) (Math.PI / 2);
@@ -90,7 +107,7 @@ public class Cube {
 
         rotation = rotation.applyRotation(angularVelocity);
 
-        momentum.add(new PVector(0,1));
+        /*momentum.add(new PVector(0,1));*/
 
         pos.add(momentum.copy().div(mass));
 
@@ -103,30 +120,29 @@ public class Cube {
     public void draw() {
 
         float[][] mat = rotation.toMatrix();
+        PVector com = MathUtil.MultiMat(centerOfMass, mat);
 
-        int i = 0;
         for (PVector point : points) {
             PVector p = MathUtil.MultiMat(point, mat);
-            PVector com = MathUtil.MultiMat(centerOfMass,mat);
+
             p.sub(com);
 
             float color = p.z;
             p.add(pos);
 
             applet.stroke((color + 1) * 255 / 2, (color + 1) * 255 / 2, 255);
-            applet.strokeWeight(1);
-
-            if (i == 8) {
-                applet.line(pos.x - com.x, pos.y - com.y, p.x, p.y);
-            }
 
             applet.strokeWeight(10);
-            if(i == 0)
-                applet.stroke(Color.MAGENTA.getRGB());
-            applet.point(p.x, p.y);
 
-            i++;
+            applet.point(p.x, p.y);
         }
+
+        PVector l = MathUtil.MultiMat(topLine.copy().sub(centerOfMass), mat);
+        l.add(pos);
+        applet.point(l.x,l.y);
+        applet.strokeWeight(1);
+        applet.line(pos.x - com.x, pos.y - com.y, l.x, l.y);
+
         PVector axis = angularVelocity.copy();
         axis.mult(200);
         axis.add(pos);
