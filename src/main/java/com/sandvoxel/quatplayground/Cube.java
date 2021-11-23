@@ -6,6 +6,7 @@ import processing.core.PVector;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class Cube {
@@ -121,6 +122,8 @@ public class Cube {
 
         float[][] mat = rotation.toMatrix();
         PVector com = MathUtil.MultiMat(centerOfMass, mat);
+
+        points.sort(Comparator.comparingDouble(x -> x.z));
 
         for (PVector point : points) {
             PVector p = MathUtil.MultiMat(point, mat);
