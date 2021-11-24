@@ -48,7 +48,7 @@ public class MathUtil {
      * @param a matrix to invert
      * @return inverts matrix
      */
-    public static float[][] invert(float a[][])
+    public static float[][] invert(float[][] a)
     {
         int n = a.length;
         float[][] x = new float[n][n];

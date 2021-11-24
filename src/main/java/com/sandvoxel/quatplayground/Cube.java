@@ -5,7 +5,6 @@ import processing.core.PVector;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,8 +29,8 @@ public class Cube {
     public Cube(PVector pos) {
         this.pos = pos;
         int numberOfRings = 5;
-        int numberOfPoints = 20;
-        float radius = 100;
+        int numberOfPoints = 50;
+        float radius = 50;
         float height = 360;
 
         float heightIncrement = height / numberOfRings;
@@ -44,15 +43,6 @@ public class Cube {
             }
         }
 
-       /* points.add(new PVector(120, 180, 30));
-        points.add(new PVector(-120, 180, 30));
-        points.add(new PVector(-120, -180, 30));
-        points.add(new PVector(120, -180, 30));
-
-        points.add(new PVector(120, 180, -30));
-        points.add(new PVector(-120, 180, -30));
-        points.add(new PVector(-120, -180, -30));
-        points.add(new PVector(120, -180, -30));*/
 
         topLine =  new PVector(0, -300, 0);
 

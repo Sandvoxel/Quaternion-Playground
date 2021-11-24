@@ -6,13 +6,8 @@ import processing.event.KeyEvent;
 
 public class Main extends PApplet {
     public static PApplet sketch;
-    public static boolean keyz[] = new boolean [5];
-    Quaternion test = new Quaternion().fromEuler(90, 100, 90);
-
+    public static boolean[] keyz = new boolean [5];
     Cube cube;
-
-
-    PVector[] points = new PVector[4];
 
     public static void main(String... args) {
         PApplet.main("com.sandvoxel.quatplayground.Main");
@@ -20,7 +15,7 @@ public class Main extends PApplet {
 
     public void settings() {
         sketch = this;
-        size(1920, 1080);
+        size(1920, 1000);
     }
 
     public void setup() {
