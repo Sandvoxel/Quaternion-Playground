@@ -9,6 +9,7 @@ public class Main extends PApplet {
     public static boolean[] keyz = new boolean [5];
     Cube cube;
 
+
     public static void main(String... args) {
         PApplet.main("com.sandvoxel.quatplayground.Main");
     }
@@ -21,7 +22,6 @@ public class Main extends PApplet {
     public void setup() {
         background(0);
         cube = new Cube(new PVector(width / 2f, height / 2f));
-
     }
 
     public void draw() {
@@ -30,7 +30,6 @@ public class Main extends PApplet {
 
         cube.draw();
         cube.update();
-
     }
 
     @Override

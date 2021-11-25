@@ -99,7 +99,7 @@ public class Cube {
 
         rotation = rotation.applyRotation(angularVelocity);
 
-        /*momentum.add(new PVector(0,1));*/
+        momentum.add(new PVector(0,1));
 
         pos.add(momentum.copy().div(mass));
 
