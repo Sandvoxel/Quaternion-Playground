@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cube {
-    private final float mass = 50f;
+    private final float mass;
 
     private final PVector pos;
     private final PVector centerOfMass = new PVector();
@@ -26,10 +26,11 @@ public class Cube {
     PVector topLine;
 
 
-    public Cube(PVector pos) {
+    public Cube(PVector pos, float mass) {
+        this.mass = mass;
         this.pos = pos;
         int numberOfRings = 5;
-        int numberOfPoints = 50;
+        int numberOfPoints = 200;
         float radius = 50;
         float height = 360;
 
@@ -55,14 +56,14 @@ public class Cube {
         centerOfMass.div(points.size());
     }
 
-    float coolAngle = (float) (Math.PI / 2);
+    float thrustAngle = (float) (Math.PI / 2);
 
     public void update() {
 
         angularVelocity = angularMomentum.getAngularVelocity(rotation);
 
         PVector point = new PVector(0, 180, 0);
-        PVector force = new PVector((float) (Math.cos(coolAngle))* 5,Math.abs((float) (Math.sin(coolAngle))) * 5,0);
+        PVector force = new PVector((float) (Math.cos(thrustAngle))* 5,Math.abs((float) (Math.sin(thrustAngle))) * 5,0);
 
         point = MathUtil.MultiMat(point, rotation.toMatrix());
         force = MathUtil.MultiMat(force, rotation.toMatrix());
@@ -85,10 +86,10 @@ public class Cube {
             momentum.mult(0);
         }
         if(Main.keyz[2]){
-            coolAngle += 0.05f;
+            thrustAngle += 0.05f;
         }
         if(Main.keyz[3]){
-            coolAngle -= 0.05f;
+            thrustAngle -= 0.05f;
         }
         if(Main.keyz[4]){
             PVector spin = new PVector(180, 0, 0).cross(new PVector(0,0,5));
@@ -99,7 +100,7 @@ public class Cube {
 
         rotation = rotation.applyRotation(angularVelocity);
 
-        momentum.add(new PVector(0,1));
+        momentum.add(Main.GRAVITY);
 
         pos.add(momentum.copy().div(mass));
 

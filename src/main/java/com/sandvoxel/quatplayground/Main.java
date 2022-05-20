@@ -6,6 +6,7 @@ import processing.event.KeyEvent;
 
 public class Main extends PApplet {
     public static PApplet sketch;
+    public static final PVector GRAVITY = new PVector(0,1);
     public static boolean[] keyz = new boolean [5];
     Cube cube;
 
@@ -21,13 +22,11 @@ public class Main extends PApplet {
 
     public void setup() {
         background(0);
-        cube = new Cube(new PVector(width / 2f, height / 2f));
+        cube = new Cube(new PVector(width / 2f, height / 2f), 50);
     }
 
     public void draw() {
         clear();
-
-
         cube.draw();
         cube.update();
     }
