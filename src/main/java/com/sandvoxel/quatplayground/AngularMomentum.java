@@ -42,7 +42,10 @@ public class AngularMomentum {
         float[][] newTensor = Arrays.stream(bodyTensor).map(float[]::clone).toArray(float[][]::new);
 
         newTensor = MathUtil.multiplyMatrices(rotation.toMatrix(), newTensor);
-        newTensor = MathUtil.multiplyMatrices(newTensor, MathUtil.invert(rotation.toMatrix()));
+
+        // Used to use MathUtil.inverse(rotation.toMatrix()) but this call was inefficient due to the fact you can inverse a Quaternion much faster than a matrix
+        newTensor = MathUtil.multiplyMatrices(newTensor, rotation.getInverse().toMatrix());
+
 
         return newTensor;
     }
